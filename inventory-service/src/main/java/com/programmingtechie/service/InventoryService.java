@@ -1,7 +1,7 @@
-package com.programmingtechie.inventoryservice.service;
+package com.programmingtechie.service;
 
-import com.programmingtechie.inventoryservice.dto.InventoryResponse;
-import com.programmingtechie.inventoryservice.repository.InventoryRepository;
+import com.programmingtechie.dto.InventoryResponse;
+import com.programmingtechie.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

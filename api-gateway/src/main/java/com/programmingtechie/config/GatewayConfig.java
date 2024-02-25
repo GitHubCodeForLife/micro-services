@@ -1,16 +1,14 @@
 package com.programmingtechie.config;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 //@Configuration
 //@EnableConfigurationProperties
-public class Config {
+public class GatewayConfig {
 
     @Bean
     @Primary

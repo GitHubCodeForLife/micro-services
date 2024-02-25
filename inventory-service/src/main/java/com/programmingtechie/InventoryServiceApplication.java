@@ -1,14 +1,16 @@
-package com.programmingtechie.inventoryservice;
-import com.programmingtechie.inventoryservice.model.Inventory;
-import com.programmingtechie.inventoryservice.repository.InventoryRepository;
+package com.programmingtechie;
+import com.programmingtechie.model.Inventory;
+import com.programmingtechie.repository.InventoryRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableEurekaClient
+//@EnableJpaRepositories
 public class InventoryServiceApplication {
 
     public static void main(String[] args) {

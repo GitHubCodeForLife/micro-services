@@ -1,4 +1,4 @@
-package com.programmingtechie.inventoryservice.model;
+package com.programmingtechie.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

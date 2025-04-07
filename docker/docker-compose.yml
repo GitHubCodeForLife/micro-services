@@ -1,0 +1,86 @@
+version: '3'
+services:
+    mysql:
+        container_name: mysql
+        restart: always
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: db
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+        volumes:
+            - /home/kali/Docker/mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+            - /home/kali/Docker/mysql/data:/var/lib/mysql
+        ports:
+            - "3306:3306"
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8181:8080
+        depends_on:
+            - mysql
+
+    mongo:
+        container_name: mongo
+        restart: always
+        image: mongo:latest
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root
+        volumes:
+            - /home/kali/Docker/mongo/data:/data/db
+        ports:
+            - "27017:27017"
+
+    keycloak:
+        container_name: keycloak
+        image: quay.io/keycloak/keycloak:26.0.7
+        command: [ "start-dev"]
+        environment:
+            KC_BOOTSTRAP_ADMIN_USERNAME: admin
+            KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+        ports:
+            - "8080:8080"
+        volumes:
+            - /home/kali/Docker/keycloack/data:/opt/keycloak/data
+    zipkin:
+        container_name: zipkin
+        image: openzipkin/zipkin:3.4.3
+        ports:
+            - "9411:9411"
+    zookeeper:
+        image: confluentinc/cp-zookeeper:7.4.4
+        environment:
+            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_TICK_TIME: 2000
+        ports:
+            - 22181:2181
+
+    kafka:
+        image: confluentinc/cp-kafka:7.4.4
+        depends_on:
+            - zookeeper
+        ports:
+            - 29092:29092
+        environment:
+            KAFKA_BROKER_ID: 1
+            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://192.168.163.128:29092
+            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+            KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        container_name: 'rabbitmq'
+        ports:
+            - 5672:5672
+            - 15672:15672
+        volumes:
+            - /home/kali/Docker/rabbitmq:/var/lib/rabbitmq
+            - /home/kali/Docker/rabbitmq_logs:/var/log/rabbitmq
+        environment:
+            - RABBITMQ_DEFAULT_USER=admin
+            - RABBITMQ_DEFAULT_PASS=123456

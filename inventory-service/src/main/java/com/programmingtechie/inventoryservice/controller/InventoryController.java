@@ -3,6 +3,8 @@ package com.programmingtechie.inventoryservice.controller;
 import com.programmingtechie.inventoryservice.dto.InventoryResponse;
 import com.programmingtechie.inventoryservice.service.InventoryService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class InventoryController {
 
     private final InventoryService inventoryService;
+    private final Logger log = LoggerFactory.getLogger(InventoryController.class);
 
     // http://localhost:8082/api/inventory/iphone-13,iphone13-red
 
@@ -21,6 +24,7 @@ public class InventoryController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<InventoryResponse> isInStock(@RequestParam List<String> skuCode) {
+        log.info("is in stock " + skuCode);
         return inventoryService.isInStock(skuCode);
     }
 }
